@@ -18,13 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('home', 'prodController');
+Route::post('/register_product', 'ProductController@store');
+Route::post('/update_product', 'ProductController@update');
+Route::resource('home', 'ProductController');
 
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\products;
+use App\Product;
 
 class HomeController extends Controller
 {
@@ -22,9 +22,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+public function index()
     {
-        $prodinfox = products::all()->toArray();
+        $prodinfox = Product::all()->toArray();
         $prod = null;
         return view('home', compact('prodinfox','prod'));
     }

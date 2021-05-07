@@ -4,4 +4,4 @@ node_modules/
 
 bootstrap/cache/
 .env
-composer.lock
+composer.*

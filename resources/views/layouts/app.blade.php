@@ -72,13 +72,6 @@
         </nav>
 
         <main class="py-4">
-            <!-- @guest
-                <h1 align="center">Welcome, please <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a> or <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a> to access the system</h1>
-            
-            @else
-            @yield('content')
-            @endguest -->
-
             @yield('content')
         </main>
     </div>

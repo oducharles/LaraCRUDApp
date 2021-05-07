@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\products;
+use App\Product;
 use Auth;
 use App\User;
 
-class prodController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +19,10 @@ class prodController extends Controller
         //dd(User::isAdmin());
         if (Auth::check()) {
             if(User::isAdmin()){
-                $prodinfox = products::all()->toArray();
+                $prodinfox = Product::all()->toArray();
         
             } else {
-            $prodinfox = products::all()->where('user_id', '=', Auth::user()->id)->toArray();
+            $prodinfox = Product::all()->where('user_id', '=', Auth::user()->id)->toArray();
             }
             $prod = null;
             return view('home', compact('prodinfox','prod'));
@@ -30,9 +30,9 @@ class prodController extends Controller
         
         // $admin_user = 3;
         // if (Auth::user()->id==$admin_user) {
-        //     $prodinfox = products::all()->toArray();
+        //     $prodinfox = Product::all()->toArray();
         // }else{
-        //     $prodinfox = products::all()->where('user_id', '=', Auth::user()->id)->toArray();
+        //     $prodinfox = Product::all()->where('user_id', '=', Auth::user()->id)->toArray();
         // }
         //     $prod = null;
         //     return view('home', compact('prodinfox','prod'));
@@ -64,7 +64,7 @@ class prodController extends Controller
             'p_detail'=>'required|file',
         ]);
 
-        $prodinfox = new products([
+        $prodinfox = new Product([
             'p_name' => $request->get('p_name'),
             'p_type' => $request->get('p_type'),
             'p_price' => $request->get('p_price'),
@@ -86,7 +86,7 @@ class prodController extends Controller
      */
     public function show($id)
     {
-        $filedown = products::find($id);
+        $filedown = Product::find($id);
         return response()->download(storage_path('app/'.$filedown->p_detail));
     }
 
@@ -99,13 +99,13 @@ class prodController extends Controller
     public function edit($id)
     {
 
-        $prod = products::find($id);
+        $prod = Product::find($id);
         if (Auth::check()) {
             if(User::isAdmin()){
-                $prodinfox = products::all()->toArray();
+                $prodinfox = Product::all()->toArray();
         
             } else {
-            $prodinfox = products::all()->where('user_id', '=', Auth::user()->id)->toArray();
+            $prodinfox = Product::all()->where('user_id', '=', Auth::user()->id)->toArray();
             }
         }
         return view('home', compact('prod', 'id','prodinfox'));
@@ -118,7 +118,7 @@ class prodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $this->validate($request, [
@@ -127,7 +127,7 @@ class prodController extends Controller
             'p_price'=>'required',
             'p_detail'=>'required|file'
         ]);
-        $prod = products::find($id);
+        $prod = Product::find($request->p_id);
 
         $prod->p_name = $request->get('p_name');
         $prod->p_type = $request->get('p_type');
@@ -148,7 +148,7 @@ class prodController extends Controller
     public function destroy($id)
     {
         //
-        $delprod = products::find($id);
+        $delprod = Product::find($id);
         $delprod->delete();
         return redirect()->route('home.index')->with('success', 'Product deleted successfully');
     }
